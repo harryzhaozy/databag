@@ -47,7 +47,10 @@ export function useAppContext() {
   const setDeviceToken = async () => {
     if (!deviceToken.current) {
       try {
-        const token = await messaging().getToken();
+        const token = await Promise.race([
+          messaging().getToken(),
+          new Promise((_, reject) => setTimeout(() => reject(new Error('push token timeout')), 2000)),
+        ]);
         if (!token) {
           throw new Error('null push token');
         }
@@ -69,7 +72,7 @@ export function useAppContext() {
     });
 
     (async () => {
-      await setDeviceToken();
+      setDeviceToken();
       access.current = await store.actions.init();
       if (access.current) {
         await setSession();

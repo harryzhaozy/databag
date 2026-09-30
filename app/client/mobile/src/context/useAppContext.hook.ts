@@ -19,6 +19,8 @@ async function requestUserPermission() {
   }
 }
 
+const PUSH_TOKEN_TIMEOUT_MS = 2000;
+
 const databag = new DatabagSDK(
   {
     channelTypes: ['sealed', 'superbasic'],
@@ -94,7 +96,10 @@ export function useAppContext() {
 
   const getToken = async () => {
     try {
-      const token = await messaging().getToken();
+      const token = await Promise.race([
+        messaging().getToken(),
+        new Promise<never>((_, reject) => setTimeout(() => reject(new Error('push token timeout')), PUSH_TOKEN_TIMEOUT_MS)),
+      ]);
       return {token, type: 'fcm'};
     } catch (err) {
       console.log(err);
