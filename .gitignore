@@ -15,3 +15,6 @@
 # Dependency directories (remove the comment below to include it)
 # vendor/
 dev_database/
+
+# Local Android release-signing material; never commit private keys or passwords.
+.signing/
