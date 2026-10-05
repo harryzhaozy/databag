@@ -77,7 +77,7 @@ export function useAppContext() {
       Platform.OS === 'ios' ? NativeModules.SettingsManager?.settings.AppleLocale || NativeModules.SettingsManager?.settings.AppleLanguages[0] : NativeModules.I18nManager?.localeIdentifier;
     const defaultLanguage = locale?.slice(0, 2) || '';
     const lang = setLanguage ? setLanguage : defaultLanguage;
-    const language = lang === 'fr' ? 'fr' : lang === 'es' ? 'es' : lang === 'pt' ? 'pt' : lang === 'de' ? 'de' : lang === 'ru' ? 'ru' : lang === 'el' ? 'el' : 'en';
+    const language = lang === 'cn' ? 'cn' : lang === 'fr' ? 'fr' : lang === 'es' ? 'es' : lang === 'pt' ? 'pt' : lang === 'de' ? 'de' : lang === 'ru' ? 'ru' : lang === 'el' ? 'el' : 'en';
 
     const store = new SessionStore();
     await store.open(DATABAG_DB);
