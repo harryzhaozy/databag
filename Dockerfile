@@ -10,7 +10,7 @@ RUN --mount=type=cache,target=/root/.yarn YARN_CACHE_FOLDER=/root/.yarn \
 
 COPY ./app/client/web/ ./
 RUN --mount=type=cache,target=/root/.yarn YARN_CACHE_FOLDER=/root/.yarn \
-    yarn run build
+  NODE_OPTIONS="--max-old-space-size=1024"  yarn run build
 
 # ==========================================
 # 阶段二：后端 Go 编译阶段（保留所有重型构建工具）
